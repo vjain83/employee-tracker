@@ -7,11 +7,11 @@ const cTable = require("console.table");
 db.connect(err => {
     if (err) throw err;
     console.log('Database connected.');
-    viewEmployeeData();
+    menu();
 
 });
 
-function viewEmployeeData() {
+function menu() {
     inquirer.prompt([
         {
             type: "list",
@@ -23,8 +23,9 @@ function viewEmployeeData() {
         }
 
     ]).then((answer) => {
+        console.log("Answer is ", answer)
         switch (answer.view) {
-            case 'View all depatments': {
+            case 'View all departments': {
                 viewAllDepartments();
                 break;
             }
@@ -62,13 +63,46 @@ function viewEmployeeData() {
 };
 
 const viewAllDepartments = () => {
-    let sql = `SELECT * FROM departments`;
+    let sql = `SELECT * FROM departments ORDER BY id`;
     db.query(sql, (err, res) => {
         if (err) throw err;
         console.table('Departments', res)
-        viewEmployeeData();
+        menu();
     });
 };
+const viewAllRoles = () => {
+    let sql = `SELECT * FROM roles ORDER BY id`;
+    db.query(sql, (err, res) => {
+        if (err) throw err;
+        console.table('Roles', res)
+        menu();
+    });
+};
+const viewAllEmployees = () => {
+    let sql = `SELECT * FROM employees ORDER BY id`;
+    db.query(sql, (err, res) => {
+        if (err) throw err;
+        console.table('Employees', res)
+        menu();
+    });
+};
+
+// const addDepartment = async () => {
+
+//     let answer = await inquirer.prompt([
+//         {
+//             type: "input",
+//             message: "Name of the Department you would like to add!",
+//             name: "name"
+//         }
+//     ]);
+//     let result = await db.query("INSERT INTO departments SET ?", {
+//         name: answer.name
+//     });
+//     console.table(result)
+//     menu();
+// }
+
 
 
 
