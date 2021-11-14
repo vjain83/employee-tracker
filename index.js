@@ -60,28 +60,28 @@ function menu() {
 };
 
 menu()
-
+// fetching all departments data from query file and then console them
 const viewAllDepartments = () => {
     query.fetchAllDepartments().then((result) => {
         console.table(result)
         menu();
     })
 };
-
+// fetching all roles data from query file and then console them
 const viewAllRoles = () => {
     query.fetchAllRoles().then((result) => {
         console.table(result)
         menu();
     })
 };
-
+// fetching all Employees data from query file and then console them
 const viewAllEmployees = () => {
     query.fetchAllEmployee().then((result) => {
         console.table(result)
         menu();
     })
 };
-
+// function to add new department in departments by insert query
 const addDepartment = () => {
 
     inquirer.prompt([
@@ -98,10 +98,10 @@ const addDepartment = () => {
         })
     })
 }
-
+// function to add new role in roles data
 const addRole = () => {
     let departmentsMap = new Map()
-
+    // as role's schema also have department's Id so needs tho fetch all departments data as to know in which department the new role has been created
     query.fetchAllDepartments().then((result) => {
         result.map(obj => departmentsMap.set(obj["departmentName"], obj["id"]))
         inquirer.prompt([
@@ -129,7 +129,7 @@ const addRole = () => {
         })
     })
 }
-
+// to add new employee use Map function on roles to get employee's role and on employees data to get Manager's detail if new employee have manager
 const addEmployee = () => {
     let rolesMap = new Map();
     let employeeMap = new Map();
@@ -172,7 +172,7 @@ const addEmployee = () => {
         })
     })
 }
-
+// to update employee's role again Map on roles and employees data to get employee name and to select role
 const updateEmployee = () => {
     let rolesMap = new Map();
     let employeeMap = new Map();

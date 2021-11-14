@@ -1,6 +1,6 @@
 
 const db = require("./connection");
-
+// fetching all departments by sql query method then exporting them to index.js
 exports.fetchAllDepartments = function () {
     return new Promise(function (resolve, reject) {
         let sql = `SELECT * FROM departments ORDER BY id`;
@@ -10,7 +10,7 @@ exports.fetchAllDepartments = function () {
         });
     })
 }
-
+// fetching all roles by sql query method then exporting them to index.js
 exports.fetchAllRoles = function () {
     return new Promise(function (resolve, reject) {
         let sql = ` SELECT r.id, r.title, r.salary, d.departmentName 
@@ -24,9 +24,10 @@ exports.fetchAllRoles = function () {
         })
     })
 }
-
+// fetching all employees by sql query method then exporting them to index.js
 exports.fetchAllEmployee = function () {
     return new Promise(function (resolve, reject) {
+        // sql query to join employees data with roles and depatents data 
         let sql = `SELECT e.id Id, e.first_name FirstName, e.last_name LastName, r.title Title, d.departmentName Department, CONCAT_WS(' ', m.first_name, m.last_name) Manager, r.salary Salary 
         FROM employees e 
         LEFT JOIN roles r ON e.role_id = r.id 
@@ -40,7 +41,7 @@ exports.fetchAllEmployee = function () {
         })
     })
 }
-
+// function to insert new  department data into the departments 
 exports.insertNewDepartment = function (department) {
     return new Promise(function (resolve, reject) {
         const sql = `INSERT INTO departments (departmentName) VALUES (?)`;
@@ -51,7 +52,7 @@ exports.insertNewDepartment = function (department) {
         });
     })
 }
-
+// function to insert new role data into roles data  
 exports.insertNewRole = function (role, salary, department) {
     return new Promise(function (resolve, reject) {
         const sql = `INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)`;
@@ -62,7 +63,7 @@ exports.insertNewRole = function (role, salary, department) {
         });
     })
 }
-
+// function to insert new employee data into employees data 
 exports.insertNewEmployee = function (firstName, lastName, role, manager) {
     return new Promise(function (resolve, reject) {
         const sql = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)`;
@@ -73,7 +74,7 @@ exports.insertNewEmployee = function (firstName, lastName, role, manager) {
         });
     })
 }
-
+// function to update employee's role by update sql query
 exports.updateEmployeeRole = function (employee, newRole) {
     return new Promise(function (resolve, reject) {
         const sql = `UPDATE employees SET role_id = ? where id = ?`;
