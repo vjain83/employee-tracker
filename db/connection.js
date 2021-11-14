@@ -6,8 +6,12 @@ const db = mysql.createConnection({
     user: 'root',
     password: '123456',
     database: 'employee_tracker_db'
-},
-    console.log('Connected to employee database')
-)
+})
+
+// Start server after DB connection
+db.connect(err => {
+    if (err) throw err;
+    console.log('Database connected in Query.');
+});
 
 module.exports = db;
